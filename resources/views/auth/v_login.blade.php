@@ -1,87 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <!--begin::Head-->
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Sistem Informasi Perpustakaan</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="ColorlibHQ" />
-    <meta name="description"
-        content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS." />
-    <meta name="keywords"
-        content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
-        integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" />
-    <!--end::Fonts-->
-    <!--begin::Third Party Plugin(OverlayScrollbars)-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css"
-        integrity="sha256-tZHrRjVqNSRyWg2wbppGnT833E/Ys0DHWGwT04GiqQg=" crossorigin="anonymous" />
-    <!--end::Third Party Plugin(OverlayScrollbars)-->
-    <!--begin::Third Party Plugin(Bootstrap Icons)-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-        integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous" />
-    <!--end::Third Party Plugin(Bootstrap Icons)-->
-    <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}" />
-    <!--end::Required Plugin(AdminLTE)-->
+    <base href="../../../">
+    <title>Login - Sistem Informasi Perpustakaan</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="{{ asset('dist/assets/template_admin/demo1/dist/assets/media/logo.jpeg') }}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link href="{{ asset('dist/assets/template_admin/demo1/dist/assets/plugins/global/plugins.bundle.css') }}"
+        rel="stylesheet" type="text/css" />
+    <link href="{{ asset('dist/assets/template_admin/demo1/dist/assets/css/style.bundle.css') }}" rel="stylesheet"
+        type="text/css" />
 </head>
 <!--end::Head-->
+
 <!--begin::Body-->
 
-<body class="login-page bg-body-secondary">
-    <div class="login-box">
-        <div class="login-logo mb-3">
-            <img src="{{ asset('logo.jpeg') }}" alt="" width="80" class="mb-2">
-            <h4>SD Negeri Pangkung Tibah</h4>
-            <a href="/"><b>Sistem </b>Perpustakaan</a>
-        </div>
-        <!-- /.login-logo -->
-        <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form action="{{ route('login.process') }}" method="post">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <input type="email" name="email" class="form-control" placeholder="Email" />
-                        <div class="input-group-text"><span class="bi bi-envelope"></span></div>
+<body id="kt_body" class="bg-body">
+
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+
+            <!--begin::Aside-->
+            <div class="d-flex flex-column flex-lg-row-auto w-xl-600px" style="background-color: #F2C98A">
+                <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
+                    <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
+                        <a href="/" class="py-9 mb-5">
+                            <img alt="Logo"
+                                src="{{ asset('dist/assets/template_admin/demo1/dist/assets/media/logo.png') }}"
+                                class="h-120px" />
+                        </a>
+                        <h1 class="fw-bolder fs-2qx pb-5" style="color: #986923;">Sistem Informasi Perpustakaan</h1>
+                        <p class="fw-bold fs-2" style="color: #986923;">Solusi Digital untuk Manajemen Koleksi dan
+                            Layanan Pustaka</p>
+
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password" />
-                        <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
+                    <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
+                        style="background-image: url('{{ asset('assets/media/illustrations/sketchy-1/13.png') }}')">
                     </div>
-                    <!--begin::Row-->
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Sign In</button>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!--end::Row-->
-                </form>
+                </div>
             </div>
-            <!-- /.login-card-body -->
+            <!--end::Aside-->
+
+            <!--begin::Body-->
+            <div class="d-flex flex-column flex-lg-row-fluid py-10">
+                <div class="d-flex flex-center flex-column flex-column-fluid">
+                    <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+
+                        <!--begin::Alert-->
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        <!--end::Alert-->
+
+                        <!--begin::Form-->
+                        <form class="form w-100" method="POST" action="{{ route('login.process') }}">
+                            @csrf
+
+                            <div class="text-center mb-10">
+                                <h1 class="text-dark mb-3">Masuk ke Halaman Admin</h1>
+                            </div>
+
+                            <div class="fv-row mb-10">
+                                <label class="form-label fs-6 fw-bolder text-dark">Email</label>
+                                <input class="form-control form-control-lg form-control-solid" type="email"
+                                    name="email" value="{{ old('email') }}" required autofocus />
+                                @error('email')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="fv-row mb-10">
+                                <div class="d-flex flex-stack mb-2">
+                                    <label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
+                                </div>
+                                <input class="form-control form-control-lg form-control-solid" type="password"
+                                    name="password" required />
+                                @error('password')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
+                                    <span class="indicator-label">Masuk</span>
+                                    <span class="indicator-progress">Mohon tunggu...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                        <!--end::Form-->
+
+                    </div>
+                </div>
+                <!--begin::Footer-->
+
+                <!--end::Footer-->
+            </div>
+            <!--end::Body-->
+
         </div>
     </div>
-    <!-- /.login-box -->
-    <!--begin::Third Party Plugin(OverlayScrollbars)-->
-    <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
-        integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
-    <!--end::Third Party Plugin(OverlayScrollbars)-->
-    <!--begin::Required Plugin(popperjs for Bootstrap 5)-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+
+    <!-- Scripts -->
+    <script>
+        var hostUrl = "{{ asset('assets/') }}/";
     </script>
-    <!--end::Required Plugin(popperjs for Bootstrap 5)-->
-    <!--begin::Required Plugin(Bootstrap 5)-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+    <script src="{{ asset('dist/assets/template_admin/demo1/dist/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('dist/assets/template_admin/demo1/dist/assets/js/scripts.bundle.js') }}"></script>
+    <script src="{{ asset('dist/assets/template_admin/demo1/dist/assets/js/custom/authentication/sign-in/general.js') }}">
     </script>
-    <!--end::Required Plugin(Bootstrap 5)-->
-    <!--begin::Required Plugin(AdminLTE)-->
-    <script src="{{ asset('dist/js/adminlte.js') }}"></script>
 </body>
+<!--end::Body-->
 
 </html>

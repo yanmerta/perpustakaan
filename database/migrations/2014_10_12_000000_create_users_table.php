@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('nis')->nullable();
             $table->string('kelas')->nullable();
             $table->string('kontak')->nullable();
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

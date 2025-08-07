@@ -26,6 +26,7 @@ class User extends Authenticatable
         'nis',
         'kelas',
         'kontak',
+        'status',
 
     ];
 

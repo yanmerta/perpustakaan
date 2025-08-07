@@ -4,17 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User; // pastikan model User di-import
 
 class C_auth extends Controller
 {
     public function login()
     {
-        // dd(Auth::user()->role);
-        // session()->invalidate();
-        // session()->regenerateToken();
         if (Auth::check()) {
             $role = Auth::user()->role;
-    
+
             return match ($role) {
                 'admin' => redirect()->route('admin.dashboard'),
                 'kepala_sekolah' => redirect()->route('kepala.dashboard'),
@@ -22,7 +20,7 @@ class C_auth extends Controller
                 default => abort(403, 'Unauthorized'),
             };
         }
-    
+
         return view('auth.v_login');
     }
 
@@ -30,22 +28,35 @@ class C_auth extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            // dd(Auth::user());
+        // Ambil user berdasarkan email
+        $user = User::where('email', $credentials['email'])->first();
 
-            if (Auth::user()->role == 'admin') {
-                return redirect()->route('admin.dashboard');
-            }
-            if (Auth::user()->role == 'kepala_sekolah') {
-                return redirect()->route('kepala.dashboard');
-            }
-            if (Auth::user()->role == 'siswa') {
-                return redirect()->route('siswa.dashboard');
-            }
+        // Cek jika user tidak ditemukan
+        if (!$user) {
+            return back()->with('error', 'Email tidak ditemukan.');
         }
 
-        return back()->with('error', 'Email atau password salah');
+        // Cek jika status user tidak aktif
+        if ($user->status !== 'aktif') {
+            return back()->with('error', 'Akun Anda tidak aktif. Silakan hubungi admin.');
+        }
+
+        // Lanjutkan proses login
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+             // ✅ Tambahkan flash session di sini
+        \Log::info('Login Success Session Set');
+        $request->session()->flash('loginSuccess', true);
+
+            return match (Auth::user()->role) {
+                'admin' => redirect()->route('admin.dashboard'),
+                'kepala_sekolah' => redirect()->route('kepala.dashboard'),
+                'siswa' => redirect()->route('siswa.dashboard'),
+                default => abort(403, 'Unauthorized'),
+            };
+        }
+
+        return back()->with('error', 'Email atau password salah.');
     }
 
     public function logout(Request $request)

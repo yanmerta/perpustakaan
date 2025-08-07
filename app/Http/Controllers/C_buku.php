@@ -19,6 +19,7 @@ class C_buku extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'kode_buku'    => 'required|string|unique:buku,kode_buku|max:50',
             'judul'        => 'required|string|max:255',
             'penulis'      => 'required|string|max:255',
             'penerbit'     => 'required|string|max:255',
@@ -46,7 +47,9 @@ class C_buku extends Controller
 
     public function update(Request $request, $id)
     {
+          $buku = M_buku::findOrFail($id);
         $request->validate([
+           'kode_buku' => 'required|string|max:50|unique:buku,kode_buku,' . $id . ',id_buku',
             'judul'        => 'required|string|max:255',
             'penulis'      => 'required|string|max:255',
             'penerbit'     => 'required|string|max:255',
@@ -57,7 +60,7 @@ class C_buku extends Controller
             'gambar'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $buku = M_buku::findOrFail($id);
+      
         $data = $request->except('gambar');
 
         if ($request->hasFile('gambar')) {

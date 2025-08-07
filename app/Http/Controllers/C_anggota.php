@@ -23,6 +23,7 @@ class C_anggota extends Controller
             'nis' => 'nullable',
             'kelas' => 'nullable',
             'kontak' => 'nullable',
+            'status' => 'required|in:aktif,nonaktif', // ✅ Validasi status
         ]);
 
         User::create([
@@ -33,6 +34,7 @@ class C_anggota extends Controller
             'nis' => $request->nis,
             'kelas' => $request->kelas, 
             'kontak' => $request->kontak,
+            'status' => $request->status ?? 'aktif', // ✅ Simpan status (default 'aktif' jika tidak ada)
         ]);
 
         return redirect()->back()->with('success', 'Anggota berhasil ditambahkan.');
@@ -48,6 +50,7 @@ class C_anggota extends Controller
             'nis' => 'nullable',
             'kelas' => 'nullable',
             'kontak' => 'nullable',
+            'status' => 'required|in:aktif,nonaktif', // ✅ Validasi status
         ]);
 
         $anggota->update([
@@ -56,6 +59,7 @@ class C_anggota extends Controller
             'nis' => $request->nis,
             'kelas' => $request->kelas,
             'kontak' => $request->kontak,
+             'status' => $request->status ?? 'aktif', // ✅ Simpan status (default 'aktif' jika tidak ada)
         ]);
 
         return redirect()->back()->with('success', 'Data anggota berhasil diperbarui.');

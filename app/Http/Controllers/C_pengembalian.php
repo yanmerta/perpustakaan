@@ -101,7 +101,7 @@ class C_pengembalian extends Controller
             // $pesan = "Halo {$user->name}, ini pengingat dari perpustakaan. Buku dengan judul '{$buku->judul}' jatuh tempo besok tanggal {$pinjam->tanggal_jatuh_tempo}. Mohon segera dikembalikan tepat waktu. Terima kasih!";
             $pesan = "📢 Hai {$user->name}!  
 Ini pengingat dari *Perpustakaan Sekolah*. Buku yang kamu pinjam berjudul *\"{$buku->judul}\"* akan *jatuh tempo besok* ({$pinjam->tanggal_jatuh_tempo}).  
-Yuk, jangan lupa dikembalikan tepat waktu ya agar tidak terkena denda. 👍  
+Yuk, jangan lupa dikembalikan tepat waktu ya. 👍  
 Terima kasih dan selamat membaca! 📚✨";
 
 

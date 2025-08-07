@@ -1,64 +1,155 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Laporan Buku Tamu Perpustakaan</title>
+    <meta charset="UTF-8" />
+    <title>Laporan Buku Tamu</title>
     <style>
         body {
             font-family: sans-serif;
             font-size: 12px;
-            margin: 0;
-            padding: 10px;
+            margin: 40px;
+            color: #000;
         }
-        h2 {
+
+        .header {
             text-align: center;
-            margin-bottom: 20px;
         }
+
+        .logo {
+            width: 80px;
+            height: auto;
+        }
+
+        h1,
+        h3 {
+            margin: 4px 0;
+        }
+
+        .info {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 20px;
+            font-size: 11px;
         }
+
         thead {
-            background-color: #343a40;
+            background-color: #2c3e50;
             color: #ffffff;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #000;
             padding: 6px;
+            vertical-align: middle;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        td {
             text-align: left;
+        }
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            text-align: center;
+            width: 30px;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            text-align: center;
+            width: 120px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            width: 100%;
+            font-size: 11px;
+        }
+
+        .footer .left {
+            float: left;
+            width: 50%;
+        }
+
+        .footer .right {
+            float: right;
+            width: 40%;
+            text-align: center;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
         }
     </style>
 </head>
+
 <body>
 
-    <h2>Laporan Buku Tamu Perpustakaan</h2>
-    <h2>SD Negeri Pangkung Tibah</h2>
+    <div class="header">
+        <img src="{{ public_path('dist/assets/template_admin/demo1/dist/assets/media/SD.png') }}" alt="Logo Sekolah"
+            class="logo" />
+        <h1>SD Negeri Pangkung Tibah</h1>
+        <h3>Laporan Buku Tamu</h3>
+        <div class="info">
+            Tahun: {{ request('tahun') ?? 'Semua' }} |
+            Bulan:
+            {{ request('bulan') ? \Carbon\Carbon::create()->month(request('bulan'))->translatedFormat('F') : 'Semua' }}
+        </div>
+    </div>
 
     <table>
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama Pengunjung</th>
+                <th>Nama Tamu</th>
                 <th>Instansi</th>
-                <th>Tanggal Kunjungan</th>
-                <th>Jam Masuk</th>
                 <th>Keperluan</th>
+                <th>Tanggal Kunjungan</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($bukuTamu as $tamu)
+            @forelse ($bukuTamu as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $tamu->nama_pengunjung }}</td>
-                    <td>{{ $tamu->instansi }}</td>
-                    <td>{{ $tamu->tanggal_kunjungan }}</td>
-                    <td>{{ $tamu->jam_masuk }}</td>
-                    <td>{{ $tamu->keperluan }}</td>
+                    <td>{{ $item->nama_pengunjung }}</td>
+                    <td>{{ $item->instansi }}</td>
+                    <td>{{ $item->keperluan }}</td>
+                    <td style="text-align: center;">
+                        {{ \Carbon\Carbon::parse($item->tanggal_kunjungan)->translatedFormat('d F Y') }}</td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="5" style="text-align: center;">Tidak ada data tersedia.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 
+    <div class="footer clearfix">
+        <div class="left">
+            Dicetak pada: {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}
+        </div>
+        <div class="right">
+            <p>Pangkung Tibah, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
+            <p>Kepala Sekolah</p>
+            <br><br><br>
+            <p><u><b>Ni Made Dwijayanti, S.Pd.SD</b></u><br>NIP. 198909192015032003</p>
+        </div>
+    </div>
+
 </body>
+
 </html>
